@@ -1,8 +1,12 @@
 server:
   port: 9000
 spring:
+  application:
+    name: "cards"
+  profiles:
+    active: "prod"
   datasource:
-    url: jdbc:h2:mem:testdbe
+    url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
     username: sa
     password: ''
@@ -15,17 +19,4 @@ spring:
       ddl-auto: update
     show-sql: true
   config:
-    import:
-      - "application-prod.yaml"
-      - "application-qa.yaml"
-  profiles:
-    active: qa
-
-cards:
-  message: "Welcome to Bank cards related local APIs "
-  contactDetails:
-    name: "Dragos - Developer"
-    email: "dragos@bank.com"
-  onCallSupport:
-    - 010-0000-0000
-    - 010-1111-1111
+    import: "optional:configserver:http://localhost:8071/"

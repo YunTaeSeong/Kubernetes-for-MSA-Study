@@ -1,3 +1,6 @@
+build:
+  version: "3.0"
+
 loans:
   message: "Welcome to Bank loans related local APIs "
   contactDetails:
