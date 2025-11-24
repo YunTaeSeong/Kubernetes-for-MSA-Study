@@ -2,7 +2,7 @@ server:
   port: 9000
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdbe
     driverClassName: org.h2.Driver
     username: sa
     password: ''
@@ -14,3 +14,18 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    import:
+      - "application-prod.yaml"
+      - "application-qa.yaml"
+  profiles:
+    active: qa
+
+cards:
+  message: "Welcome to Bank cards related local APIs "
+  contactDetails:
+    name: "Dragos - Developer"
+    email: "dragos@bank.com"
+  onCallSupport:
+    - 010-0000-0000
+    - 010-1111-1111
