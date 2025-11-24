@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: qa
+
+build:
+  version: 2.0
+
+accounts:
+  message: "Welcome to Bank accounts related QA APIs"
+  contactDetails:
+    name: "Smith - QA"
+    email: "smith@bank.com"
+  onCallSupport:
+    - 010-0000-0000
+    - 010-1111-1111
