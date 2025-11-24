@@ -1,0 +1,11 @@
+build:
+  version: "2.0"
+
+cards:
+  message: "Welcome to Bank cards related QA APIs "
+  contactDetails:
+    name: "Cyrano - QA Lead"
+    email: "cyrano@bank.com"
+  onCallSupport:
+    - 010-0000-0000
+    - 010-1111-1111

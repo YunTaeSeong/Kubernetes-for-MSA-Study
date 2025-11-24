@@ -1,0 +1,11 @@
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to Bank accounts related local APIs"
+  contactDetails:
+    name: "John - Developer"
+    email: "john@bank.com"
+  onCallSupport:
+    - 010-0000-0000
+    - 010-1111-1111

@@ -1,0 +1,8 @@
+loans:
+  message: "Welcome to Bank loans related local APIs "
+  contactDetails:
+    name: "Amaal - Developer"
+    email: "amaal@bank.com"
+  onCallSupport:
+    - 010-0000-0000
+    - 010-1111-1111
