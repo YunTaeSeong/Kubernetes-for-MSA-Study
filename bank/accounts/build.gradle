@@ -44,8 +44,6 @@ dependencies {
 	// cloud config
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
-	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bus-amqp
-	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 }
 
 dependencyManagement {
