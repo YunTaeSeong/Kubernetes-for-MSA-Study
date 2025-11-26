@@ -44,6 +44,9 @@ dependencies {
 	// cloud config
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
+	// Eureka Discovery Client
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
 }
 
 dependencyManagement {
