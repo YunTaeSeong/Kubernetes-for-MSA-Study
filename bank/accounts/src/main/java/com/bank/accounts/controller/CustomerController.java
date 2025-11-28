@@ -5,16 +5,16 @@ import com.bank.accounts.service.ICustomerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 @Validated
 @Tag(
@@ -23,16 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class CustomerController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
     private final ICustomerService iCustomerService;
 
     @GetMapping("/fetchCustomerDetails")
     public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(
-            @Pattern(regexp = "($|[0-9]{10})", message = "Mobile Number must be 10 digits") // 숫자만 정확히 10자리 받아야함
-            @RequestParam String mobileNumber
-    ) {
-        CustomerDetailsDto customerDetailsDto = iCustomerService.fetchCustomerDetails(mobileNumber);
+            @RequestHeader("bank-correlation-id") String correlationId,
+            @Pattern(regexp="(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
+            @RequestParam String mobileNumber)
+    {
+        logger.debug("bank-correlation-id found: {}", correlationId);
+        CustomerDetailsDto customerDetailsDto = iCustomerService.fetchCustomerDetails(mobileNumber, correlationId);
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.SC_OK)
                 .body(customerDetailsDto);
     }
 }
