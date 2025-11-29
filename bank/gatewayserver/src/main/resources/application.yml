@@ -30,3 +30,12 @@ info:
     name: "gatewayserver"
     description: "Bank GatewayServer Application"
     version: "1.0.0"
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10 # 최근 10개의 호출을 기준으로 성공/실패율을 계산, CircuitBreaker는 "최근 N번의 호출 중 몇 %가 실패했는가"를 보고 Open(열림) 상태로 바뀜
+        permitted-number-of-calls-in-half-open-state: 2 # Open → Half-Open 상태로 전환되면, 테스트 삼아 2번의 요청만 외부로 보냄 // 2번 모두 성공 시 close, 2번 모두 실패 시 open
+        failure-rate-threshold: 50 # 실패율이 50% 이상이면 CircuitBreaker를 Open 상태로 전환
+        wait-duration-in-open-state: 10000 # Open 상태가 된 후 10초(10000ms) 동안 요청을 차단, 시간이 지난 후, Half-Open 상태로 바뀌어 일부 요청을 테스트로 보냄
