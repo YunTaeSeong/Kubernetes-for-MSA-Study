@@ -39,6 +39,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-circuitbreaker-reactor-resilience4j
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
 
 }
 

@@ -7,10 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -46,7 +49,9 @@ public class GatewayServerApplication {
                         p-> p
                             .path("/bank/cards/**")
                             .filters(f-> f.rewritePath("/bank/cards/(?<segment>.*)","/${segment}")
-                                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+                                    .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+                                    .requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(keyResolver()))
+                            )
                             .uri("lb://CARDS")).build();
     }
 
@@ -56,5 +61,19 @@ public class GatewayServerApplication {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
                 .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
                 .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(4)).build()).build());
+    }
+
+    @Bean
+    public RedisRateLimiter redisRateLimiter() {
+        // replenishRate : 초당 재충전 되는 토큰 수
+        // burstCapacity : 버킷이 가질 수 있는 최대 토큰 수
+        // requestedTokens : 요청이 소비하는 토큰 수
+        return new RedisRateLimiter(1,1,1);
+    }
+
+    @Bean
+    public KeyResolver keyResolver() {
+        return exchange -> Mono.justOrEmpty(exchange.getRequest().getQueryParams().getFirst("user")) // 쿼리 파라미터 중 user 파라미터의 첫 번째 값을 가져옴
+                .defaultIfEmpty("anonymous"); // user 값이 없으면 anonymous
     }
 }
