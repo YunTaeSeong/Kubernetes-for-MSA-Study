@@ -42,3 +42,13 @@ resilience4j:
         permitted-number-of-calls-in-half-open-state: 2 # Open → Half-Open 상태로 전환되면, 테스트 삼아 2번의 요청만 외부로 보냄 // 2번 모두 성공 시 close, 2번 모두 실패 시 open
         failure-rate-threshold: 50 # 실패율이 50% 이상이면 CircuitBreaker를 Open 상태로 전환
         wait-duration-in-open-state: 10000 # Open 상태가 된 후 10초(10000ms) 동안 요청을 차단, 시간이 지난 후, Half-Open 상태로 바뀌어 일부 요청을 테스트로 보냄
+  retry:
+    configs:
+      default:
+        max-attempts: 3 # 재시도 최대 횟수 3번
+        wait-duration: 500 # 대기 시간
+        enable-exponential-backoff: true # 대기 시간 증가 방식
+        exponential-backoff-multiplier: 2 # 대기 시간 증가 비율
+        ignore-exceptions:
+          - java.lang.NullPointerException
+
