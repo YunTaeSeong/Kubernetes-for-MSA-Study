@@ -11,6 +11,9 @@ spring:
             locator:
               enabled: false # 현재 사용자 정의 필터에 등록된 eureka 인스턴스만 나오게 수정
               lower-case-service-id: true
+          httpclient:
+            connect-timeout: 1000
+            response-timeout: 2s
 
 
 management:
