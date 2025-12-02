@@ -32,6 +32,9 @@ management:
     health:
       probes:
         enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name} # 런타임 시 값은 속성에 할당
 
 server:
   port: 8071

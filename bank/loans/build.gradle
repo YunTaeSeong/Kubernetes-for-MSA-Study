@@ -49,6 +49,8 @@ dependencies {
     // Eureka Discovery Client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
 }
 
 dependencyManagement {
