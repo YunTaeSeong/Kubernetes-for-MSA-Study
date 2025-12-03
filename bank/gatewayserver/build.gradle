@@ -46,6 +46,14 @@ dependencies {
 
     implementation "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter:2.11.0"
 
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-jose
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+
 }
 
 dependencyManagement {
