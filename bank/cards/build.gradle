@@ -16,12 +16,12 @@ java {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 ext {
     set('springCloudVersion', "2025.0.0")
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -51,6 +51,7 @@ dependencies {
 
     implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    implementation "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter:2.11.0"
 
 }
 
